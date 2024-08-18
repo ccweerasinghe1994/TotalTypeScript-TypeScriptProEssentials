@@ -1,0 +1,4 @@
+# .gitignore file for the TypeScript project
+
+# Ignore all JavaScript files
+*.js
