@@ -1542,7 +1542,412 @@ document.addEventListener(
 ### 070 TypeScript's Approach to Errors
 
 ```ts
+// TypeScript sometimes warns you about
+// things which will fail at runtime
+
+const a = null;
+
+a.toString();
+
+// But not everything it warns you
+// about will fail at runtime
+
+const obj = {};
+
+obj.foo = "hello";
+
+// It will try to warn you as close to
+// the source of the problem as possible
+
+type MyUser = {
+  name: string;
+};
+
+const user: MyUser = {
+  nme: "Katherine",
+};
+
+// But sometimes that's not always possible
+
+type FunctionThatReturnsAString = () => string;
+
+const fn: FunctionThatReturnsAString = () => {
+  return 123;
+};
 
 ```
 
+![alt text](image.png)
+
 ### 071 Quick Renaming in VS Code
+
+```ts
+const users = [
+  { id: "1", name: "Robin" },
+  { id: "2", name: "Dennis" },
+  { id: "3", name: "Sara" },
+];
+
+// Imagine this function was 10x bigger
+// with 10x more references to `id`
+
+// How do we change id to userId?
+const filterUsersById = (id: string) => {
+  return users.filter((user) => user.id === id);
+};
+
+```
+
+### 072 Navigating Code with _Go to Definition_
+```ts
+// You can use go to definition to jump to the definition of something
+
+const myFunction = () => {
+  console.log("Hello!");
+};
+
+myFunction();
+myFunction();
+
+// This can work across files, too:
+
+import { hiThere } from "./dummy-import";
+
+hiThere();
+
+// As well as on types:
+
+type Example = PropertyKey;
+
+// It can also take you to mysterious places:
+
+document;
+
+```
+### 073 Fast Imports in VS Code
+```ts
+const expirationTimes = [
+  SESSION_EXPIRATION_TIME,
+  SESSION_EXPIRATION_TIME_IN_SECONDS,
+  SESSION_EXPIRATION_TIME_IN_MINUTES,
+  SESSION_EXPIRATION_TIME_IN_HOURS,
+];
+
+```
+### 074 Using Autocomplete and Quick Fix to Import Variables
+```ts
+import {
+  SESSION_EXPIRATION_TIME,
+  SESSION_EXPIRATION_TIME_IN_SECONDS,
+  SESSION_EXPIRATION_TIME_IN_MINUTES,
+  SESSION_EXPIRATION_TIME_IN_HOURS,
+} from "./dummy-import";
+
+const expirationTimes = [
+  SESSION_EXPIRATION_TIME,
+  SESSION_EXPIRATION_TIME_IN_SECONDS,
+  SESSION_EXPIRATION_TIME_IN_MINUTES,
+  SESSION_EXPIRATION_TIME_IN_HOURS,
+];
+
+```
+### 075 Organizing Imports in Large Files
+```ts
+import {
+  MAX_PAGE,
+  DEFAULT_COLOR,
+  DEFAULT_FILTER,
+  DEFAULT_PAGE,
+  DEFAULT_SORT,
+  DEFAULT_USERNAME,
+  FILTER_OPTIONS,
+} from "./dummy-import-2";
+
+const handlePage = (page: number) => {
+  if (page > MAX_PAGE) {
+    console.log("Page is too large!");
+  }
+};
+
+```
+### 076 The Organize Imports Hotkey in VS Code
+```ts
+import {
+  MAX_PAGE
+} from "./dummy-import-2";
+
+const handlePage = (page: number) => {
+  if (page > MAX_PAGE) {
+    console.log("Page is too large!");
+  }
+};
+
+```
+### 077 Quick Fix Refactoring
+```ts
+const func = () => {
+  // Refactor this to be its own function
+  const randomPercentage = `${(Math.random() * 100).toFixed(2)}%`;
+  console.log(randomPercentage);
+};
+
+```
+### 078 Refactoring with Quick Fixes
+```ts
+const func = () => {
+  // Refactor this to be its own function
+  const randomPercentage = generateRandomPercentage();
+  console.log(randomPercentage);
+};
+function generateRandomPercentage() {
+  return `${(Math.random() * 100).toFixed(2)}%`;
+}
+
+
+```
+### 079 Automatic Code Formatting with Prettier
+```ts
+
+```
+### 080 Restarting the TypeScript Server in VS Code
+```ts
+
+```
+### 081 Handling Null Values in TypeScript
+```ts
+
+```
+### 082 Introducing Union Types in TypeScript
+```ts
+
+```
+### 083 Diving Deeper into Unions and Assignability
+```ts
+
+```
+### 084 Restricting Function Parameters
+```ts
+
+```
+### 085 Combining Literal & Union Types
+```ts
+
+```
+### 086 Literal Type Assignability
+```ts
+
+```
+### 087 Combining Union Types in TypeScript
+```ts
+
+```
+### 088 Create New Types By Combining Unions
+```ts
+
+```
+### 089 How Big Can a Union Be_
+```ts
+
+```
+### 090 Resolving Literal Types to Wider Types
+```ts
+
+```
+### 091 Narrowing Unions with
+```ts
+
+```
+### 092 Conditional Narrowing in TypeScript
+```ts
+
+```
+### 093 Different Approaches for Narrowing Inputs
+```ts
+
+```
+### 094 Narrowing with Boolean Won't Work
+```ts
+
+```
+### 095 Gotchas When Narrowing a Map in TypeScript
+```ts
+
+```
+### 096 Correctly Narrowing a Map in TypeScript
+```ts
+
+```
+### 097 Narrowing by Throwing Errors
+```ts
+
+```
+### 098 Throwing Errors to Narrow
+```ts
+
+```
+### 099 Narrowing with
+```ts
+
+```
+### 100 Dynamically Handling Different API Responses in ```ts
+```ts
+
+```
+
+### 101 Introducing the Unknown Type in TypeScript
+```ts
+
+```
+### 102 Dealing with Unknown Errors in TypeScript
+```ts
+
+```
+### 103 Narrowing with
+```ts
+
+```
+### 104 Narrowing Unknown in a Large Conditional Statement
+```ts
+
+```
+### 105 Narrowing Unknown Types in TypeScript
+```ts
+
+```
+### 106 Introducing the
+```ts
+
+```
+### 107 Solving the Never Type in TypeScript
+```ts
+
+```
+### 108 Empty Arrays and the Never Type in TypeScript
+```ts
+
+```
+### 109 Narrowing Return Types with TypeScript
+```ts
+
+```
+### 110 Returning
+```ts
+
+```
+### 111 Narrowing in Different Scopes
+```ts
+
+```
+### 112 Narrowing Behavior Across Scopes
+```ts
+
+```
+### 113 Handling Separate But Related Types
+```ts
+
+```
+### 114 Improving Type Safety with Discriminated Unions in TypeScript
+
+```ts
+
+```
+
+### 115 Destructuring a Discriminated Union in TypeScript
+```ts
+
+```
+### 116 Limitations of Destructuring Discriminated Unions
+```ts
+
+```
+### 117 Narrowing a Discriminated Union with a Switch
+```ts
+
+```
+### 118 Refactoring to a Switch Statement
+```ts
+
+```
+### 119 The switch (true) Pattern in TypeScript
+```ts
+
+```
+### 120 Refining Types with Discriminated Unions of Tuples
+```ts
+
+```
+### 121 Handle Error and Success States by Narrowing
+```ts
+
+```
+### 122 Discriminated Booleans
+```ts
+
+```
+### 123 Discriminated Unions with Boolean Discriminators
+```ts
+
+```
+### 124 Adding Defaults to a Discriminated Union
+```ts
+
+```
+### 125 Handling Optional Parameters in Discriminated Unions
+```ts
+
+```
+### 126 Should You Provide Function Return Types_
+```ts
+
+```
+### 127 Extending Objects in TypeScript
+```ts
+
+```
+### 128 Use the Intersection Operator to Extend an Object Type in TypeScript
+```ts
+
+```
+
+
+### 129 Extend an Object Using Interfaces in TypeScript
+
+```ts
+
+```
+### 130 Extending Interfaces to Create Hierarchies in TypeScript
+```ts
+
+```
+
+### 131 Extending Incompatible Properties
+
+```ts
+
+```
+### 132 Comparing Intersections and Interface Extends
+
+```ts
+
+```
+### 133 Comparing Intersection and Interface Extends in TypeScript
+```ts
+
+```
+### 134 Allow Dynamic Keys in TypeScript Types
+
+```ts
+
+```
+### 135 Dynamic Keys with Index Signatures and Record Types
+
+```ts
+
+```
+### 136 Allow Any String Key while Supporting Default Properties
+```ts
+
+```
+### 137 Add an Index Signature to an Interface```ts
+
+```

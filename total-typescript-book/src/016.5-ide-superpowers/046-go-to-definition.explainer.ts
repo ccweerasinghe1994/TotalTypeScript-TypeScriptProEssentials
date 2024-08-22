@@ -5,6 +5,7 @@ const myFunction = () => {
 };
 
 myFunction();
+myFunction();
 
 // This can work across files, too:
 
