@@ -2,9 +2,10 @@ import { expect, it } from "vitest";
 
 function validateUsername(username: string | null): boolean {
   // Rewrite this function to make the error go away
-  return username.length > 5;
 
-  return false;
+  if (username === null) return false;
+
+  return username.length > 5;
 }
 
 it("should return true for valid usernames", () => {

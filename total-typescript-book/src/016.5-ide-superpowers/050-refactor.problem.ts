@@ -6,4 +6,3 @@ const func = () => {
 function generateRandomPercentage() {
   return `${(Math.random() * 100).toFixed(2)}%`;
 }
-

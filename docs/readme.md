@@ -1707,131 +1707,820 @@ function generateRandomPercentage() {
 ```
 ### 079 Automatic Code Formatting with Prettier
 ```ts
+// Explain prettier
+
+// Explain how to set up prettier
+
+// Explain how to set up formatOnSave
 
 ```
 ### 080 Restarting the TypeScript Server in VS Code
-```ts
 
-```
+![alt text](image-1.png)
+
 ### 081 Handling Null Values in TypeScript
 ```ts
+import { Equal, Expect } from "@total-typescript/helpers";
+
+function getUsername(username: string) {
+  if (username !== null) {
+    return `User: ${username}`;
+  } else {
+    return "Guest";
+  }
+}
+
+// TESTS
+
+const result = getUsername("Alice");
+type test = Expect<Equal<typeof result, string>>;
+
+const result2 = getUsername(null);
+type test2 = Expect<Equal<typeof result2, string>>;
 
 ```
 ### 082 Introducing Union Types in TypeScript
 ```ts
+import { Equal, Expect } from "@total-typescript/helpers";
+
+function getUsername(username: string | null) {
+  if (username !== null) {
+    return `User: ${username}`;
+  } else {
+    return "Guest";
+  }
+}
+
+// TESTS
+
+const result = getUsername("Alice");
+type test = Expect<Equal<typeof result, string>>;
+
+const result2 = getUsername(null);
+type test2 = Expect<Equal<typeof result2, string>>;
 
 ```
 ### 083 Diving Deeper into Unions and Assignability
+
+![alt text](image-2.png)
+
 ```ts
 
 ```
 ### 084 Restricting Function Parameters
 ```ts
+function move(direction: string, distance: number) {
+  // Move the specified distance in the given direction
+}
+
+// TESTS
+
+move("up", 10);
+move("left", 5);
+
+move(
+  // @ts-expect-error - "up-right" is not a valid direction
+  "up-right",
+  10,
+);
+
+move(
+  // @ts-expect-error - "down-left" is not a valid direction
+  "down-left",
+  20,
+);
+
+move(
+  "up",
+  // @ts-expect-error - "20" is not a valid distance
+  "20",
+);
 
 ```
 ### 085 Combining Literal & Union Types
 ```ts
+type Direction = "up" | "left" | "down" | "right";
+
+function move(direction: Direction, distance: number) {
+  // Move the specified distance in the given direction
+}
+
+// TESTS
+
+move("up", 10);
+move("left", 5);
+
+move(
+  // @ts-expect-error - "up-right" is not a valid direction
+  "up-right",
+  10
+);
+
+move(
+  // @ts-expect-error - "down-left" is not a valid direction
+  "down-left",
+  20
+);
+
+move(
+  "up",
+  // @ts-expect-error - "20" is not a valid distance
+  "20"
+);
 
 ```
 ### 086 Literal Type Assignability
 ```ts
-
+![alt text](image-3.png)
 ```
 ### 087 Combining Union Types in TypeScript
 ```ts
+import { Equal, Expect } from "@total-typescript/helpers";
+
+type HttpCode = "400" | "401" | "404" | "500" | "200" | "201" | "204";
+
+const handleErrorCase = (code: string) => {
+  // An imaginary function where we only handle the errors
+
+  type test = Expect<Equal<typeof code, "400" | "401" | "404" | "500">>;
+};
+
+const handleSuccessCase = (code: string) => {
+  // An imaginary function where we only handle the success cases
+
+  type test = Expect<Equal<typeof code, "200" | "201" | "204">>;
+};
+
+const handleAllCase = (code: HttpCode) => {
+  // An imaginary function where we handle all the cases
+
+  type test = Expect<
+    Equal<typeof code, "200" | "201" | "204" | "400" | "401" | "404" | "500">
+  >;
+};
 
 ```
 ### 088 Create New Types By Combining Unions
 ```ts
+import { Equal, Expect } from "@total-typescript/helpers";
+
+type SuccessCode = "200" | "201" | "204";
+
+type ErrorCode = "400" | "401" | "404" | "500";
+
+type HttpCode = SuccessCode | ErrorCode;
+
+const handleErrorCase = (code: ErrorCode) => {
+  // An imaginary function where we only handle the errors
+
+  type test = Expect<Equal<typeof code, "400" | "401" | "404" | "500">>;
+};
+
+const handleSuccessCase = (code: SuccessCode) => {
+  // An imaginary function where we only handle the success cases
+
+  type test = Expect<Equal<typeof code, "200" | "201" | "204">>;
+};
+
+const handleAllCase = (code: HttpCode) => {
+  // An imaginary function where we handle all the cases
+
+  type test = Expect<
+    Equal<typeof code, "200" | "201" | "204" | "400" | "401" | "404" | "500">
+  >;
+};
 
 ```
 ### 089 How Big Can a Union Be_
 ```ts
+type Alphabet =
+  | "a"
+  | "b"
+  | "c"
+  | "d"
+  | "e"
+  | "f"
+  | "g"
+  | "h"
+  | "i"
+  | "j"
+  | "k"
+  | "l"
+  | "m"
+  | "n"
+  | "o"
+  | "p"
+  | "q"
+  | "r"
+  | "s"
+  | "t"
+  | "u"
+  | "v"
+  | "w"
+  | "x"
+  | "y"
+  | "z";
+
+type TooBig = `${Alphabet}${Alphabet}${Alphabet}${Alphabet}`;
 
 ```
+![alt text](image-4.png)
 ### 090 Resolving Literal Types to Wider Types
 ```ts
+const getResolvedIconSize = (
+  iconSize: "small" | "medium" | "large" | string,
+) => {
+  switch (iconSize) {
+    case "small":
+      return 16;
+    case "medium":
+      return 32;
+    case "large":
+      return 48;
+    default:
+      return iconSize;
+  }
+};
+
+// It doesn't give you autocomplete for 'small', 'medium', or 'large'!
+getResolvedIconSize("awdawd");
 
 ```
 ### 091 Narrowing Unions with
 ```ts
+const convertTime = (time: string | number) => {
+  if (typeof time === "string") {
+    console.log(time); // string
+  } else {
+    console.log(time); // number
+  }
+
+  console.log(time); // string | number
+};
 
 ```
 ### 092 Conditional Narrowing in TypeScript
 ```ts
+import { expect, it } from "vitest";
 
+function validateUsername(username: string | null): boolean {
+  // Rewrite this function to make the error go away
+  return username.length > 5;
+
+  return false;
+}
+
+it("should return true for valid usernames", () => {
+  expect(validateUsername("Matt1234")).toBe(true);
+
+  expect(validateUsername("Alice")).toBe(false);
+  expect(validateUsername("Bob")).toBe(false);
+});
+
+it("Should return false for null", () => {
+  expect(validateUsername(null)).toBe(false);
+});
 ```
 ### 093 Different Approaches for Narrowing Inputs
 ```ts
+import { expect, it } from "vitest";
+
+function validateUsername(username: string | null): boolean {
+  // Rewrite this function to make the error go away
+  if (username) {
+    return username.length > 5;
+  }
+
+  return false;
+}
+
+it("should return true for valid usernames", () => {
+  expect(validateUsername("Matt1234")).toBe(true);
+
+  expect(validateUsername("Alice")).toBe(false);
+  expect(validateUsername("Bob")).toBe(false);
+});
+
+it("Should return false for null", () => {
+  expect(validateUsername(null)).toBe(false);
+});
+
+```
+```ts
+import { expect, it } from "vitest";
+
+function validateUsername(username: string | null): boolean {
+  // Rewrite this function to make the error go away
+  if (typeof username === "string") {
+    return username.length > 5;
+  }
+
+  return false;
+}
+
+it("should return true for valid usernames", () => {
+  expect(validateUsername("Matt1234")).toBe(true);
+
+  expect(validateUsername("Alice")).toBe(false);
+  expect(validateUsername("Bob")).toBe(false);
+});
+
+it("Should return false for null", () => {
+  expect(validateUsername(null)).toBe(false);
+});
+
+```
+```ts
+import { expect, it } from "vitest";
+
+function validateUsername(username: string | null): boolean {
+  // Rewrite this function to make the error go away
+  if (typeof username !== "string") {
+    return false;
+  }
+
+  return username.length > 5;
+}
+
+it("should return true for valid usernames", () => {
+  expect(validateUsername("Matt1234")).toBe(true);
+
+  expect(validateUsername("Alice")).toBe(false);
+  expect(validateUsername("Bob")).toBe(false);
+});
+
+it("Should return false for null", () => {
+  expect(validateUsername(null)).toBe(false);
+});
+
+```
+```ts
+import { expect, it } from "vitest";
+
+function validateUsername(username: string | null): boolean {
+  if (typeof username === "object") {
+    return false;
+  }
+
+  return username.length > 5;
+}
+
+it("should return true for valid usernames", () => {
+  expect(validateUsername("Matt1234")).toBe(true);
+
+  expect(validateUsername("Alice")).toBe(false);
+  expect(validateUsername("Bob")).toBe(false);
+});
+
+it("Should return false for null", () => {
+  expect(validateUsername(null)).toBe(false);
+});
+
+```
+```ts
+import { expect, it } from "vitest";
+
+function validateUsername(username: string | null): boolean {
+  // Rewrite this function to make the error go away
+
+  if (username === null) return false;
+
+  return username.length > 5;
+}
+
+it("should return true for valid usernames", () => {
+  expect(validateUsername("Matt1234")).toBe(true);
+
+  expect(validateUsername("Alice")).toBe(false);
+  expect(validateUsername("Bob")).toBe(false);
+});
+
+it("Should return false for null", () => {
+  expect(validateUsername(null)).toBe(false);
+});
+
+```
+```ts
+import { expect, it } from "vitest";
+
+function validateUsername(username: string | null): boolean {
+  const isUsernameOK = typeof username === "string";
+
+  if (isUsernameOK) {
+    return username.length > 5;
+  }
+
+  return false;
+}
+
+it("should return true for valid usernames", () => {
+  expect(validateUsername("Matt1234")).toBe(true);
+
+  expect(validateUsername("Alice")).toBe(false);
+  expect(validateUsername("Bob")).toBe(false);
+});
+
+it("Should return false for null", () => {
+  expect(validateUsername(null)).toBe(false);
+});
 
 ```
 ### 094 Narrowing with Boolean Won't Work
 ```ts
+import { expect, it } from "vitest";
+
+function validateUsername(username: string | null): boolean {
+  // Why isn't this working?
+  const isUsernameOK = Boolean(username);
+
+  if (isUsernameOK) {
+    return username.length > 5;
+  }
+
+  return false;
+}
+
+it("should return true for valid usernames", () => {
+  expect(validateUsername("Matt1234")).toBe(true);
+
+  expect(validateUsername("Alice")).toBe(false);
+  expect(validateUsername("Bob")).toBe(false);
+});
+
+it("Should return false for null", () => {
+  expect(validateUsername(null)).toBe(false);
+});
 
 ```
 ### 095 Gotchas When Narrowing a Map in TypeScript
 ```ts
+type Event = {
+  message: string;
+};
+
+const processUserMap = (eventMap: Map<string, Event>) => {
+  if (eventMap.has("error")) {
+    const message = eventMap.get("error").message;
+
+    throw new Error(message);
+  }
+};
 
 ```
 ### 096 Correctly Narrowing a Map in TypeScript
 ```ts
+type Event = {
+  message: string;
+};
+
+const processUserMap = (eventMap: Map<string, Event>) => {
+  const errorEvent = eventMap.get("error");
+  if (errorEvent) {
+    const message = errorEvent.message;
+    throw new Error(message);
+  }
+};
 
 ```
 ### 097 Narrowing by Throwing Errors
 ```ts
+import { Equal, Expect } from "@total-typescript/helpers";
+
+const appElement = document.getElementById("app");
+
+// How do I ensure that appElement is defined?
+
+type Test = Expect<Equal<typeof appElement, HTMLElement>>;
 
 ```
 ### 098 Throwing Errors to Narrow
 ```ts
+import { Equal, Expect } from "@total-typescript/helpers";
+
+const appElement = document.getElementById("app");
+
+// How do I ensure that appElement is defined?
+if (!appElement) {
+  throw new Error("App element not found");
+}
+
+type Test = Expect<Equal<typeof appElement, HTMLElement>>;
 
 ```
 ### 099 Narrowing with
 ```ts
+import { expect, it } from "vitest";
+
+type APIResponse =
+  | {
+      data: {
+        id: string;
+      };
+    }
+  | {
+      error: string;
+    };
+
+const handleResponse = (response: APIResponse) => {
+  // How do we check if 'data' is in the response?
+  if (true) {
+    return response.data.id;
+  } else {
+    throw new Error(response.error);
+  }
+};
+
+it("Should handle a response with data", () => {
+  const response = {
+    data: {
+      id: "123",
+    },
+  };
+
+  expect(handleResponse(response)).toBe("123");
+});
+
+it("Should handle a response with an error", () => {
+  const response = {
+    error: "Something went wrong",
+  };
+
+  expect(() => handleResponse(response)).toThrow("Something went wrong");
+});
 
 ```
-### 100 Dynamically Handling Different API Responses in ```ts
+### 100 Dynamically Handling Different API Responses in
 ```ts
+import { expect, it } from "vitest";
+
+type APIResponse =
+  | {
+      data: {
+        id: string;
+      };
+    }
+  | {
+      error: string;
+    };
+
+const handleResponse = (response: APIResponse) => {
+  // How do we check if 'data' is in the response?
+  if ("data" in response) {
+    return response.data.id;
+  } else {
+    throw new Error(response.error);
+  }
+};
+
+it("Should handle a response with data", () => {
+  const response = {
+    data: {
+      id: "123",
+    },
+  };
+
+  expect(handleResponse(response)).toBe("123");
+});
+
+it("Should handle a response with an error", () => {
+  const response = {
+    error: "Something went wrong",
+  };
+
+  expect(() => handleResponse(response)).toThrow("Something went wrong");
+});
 
 ```
 
 ### 101 Introducing the Unknown Type in TypeScript
 ```ts
+const fn = (input: unknown) => {};
+
+// Anything is assignable to unknown!
+fn("hello");
+fn(42);
+fn(true);
+fn({});
+fn([]);
+fn(() => {});
 
 ```
+
+![alt text](image-5.png)
+
 ### 102 Dealing with Unknown Errors in TypeScript
 ```ts
+const somethingDangerous = () => {
+  if (Math.random() > 0.5) {
+    throw new Error("Something went wrong");
+  }
+
+  return "all good";
+};
+
+try {
+  somethingDangerous();
+} catch (error) {
+  // How do we change this code to make it
+  // not show a red squiggly?
+  if (true) {
+    console.error(error.message);
+  }
+}
 
 ```
 ### 103 Narrowing with
 ```ts
+const somethingDangerous = () => {
+  if (Math.random() > 0.5) {
+    throw new Error("Something went wrong");
+  }
+
+  return "all good";
+};
+
+try {
+  somethingDangerous();
+} catch (error) {
+  // How do we change this code to make it
+  // not show a red squiggly?
+  if (error instanceof Error) {
+    console.error(error.message);
+  } else {
+    throw error;
+  }
+}
 
 ```
 ### 104 Narrowing Unknown in a Large Conditional Statement
 ```ts
+import { Equal, Expect } from "@total-typescript/helpers";
+import { expect, it } from "vitest";
+
+const parseValue = (value: unknown) => {
+  if (true) {
+    return value.data.id;
+  }
+
+  throw new Error("Parsing error!");
+};
+
+it("Should handle a { data: { id: string } }", () => {
+  const result = parseValue({
+    data: {
+      id: "123",
+    },
+  });
+
+  type test = Expect<Equal<typeof result, string>>;
+
+  expect(result).toBe("123");
+});
+
+it("Should error when anything else is passed in", () => {
+  expect(() => parseValue("123")).toThrow("Parsing error!");
+  expect(() => parseValue(123)).toThrow("Parsing error!");
+});
 
 ```
 ### 105 Narrowing Unknown Types in TypeScript
 ```ts
+import { Equal, Expect } from "@total-typescript/helpers";
+import { expect, it } from "vitest";
+
+type Value = { data: { id: string } };
+
+const parseValue = (value: unknown) => {
+  if (
+    value &&
+    typeof value === "object" &&
+    "data" in value &&
+    value.data &&
+    typeof value.data === "object" &&
+    "id" in value.data &&
+    typeof value.data.id === "string"
+  ) {
+    return value.data.id;
+  }
+
+  throw new Error("Parsing error!");
+};
+
+it("Should handle a { data: { id: string } }", () => {
+  const result = parseValue({
+    data: {
+      id: "123",
+    },
+  });
+
+  type test = Expect<Equal<typeof result, string>>;
+
+  expect(result).toBe("123");
+});
+
+it("Should error when anything else is passed in", () => {
+  expect(() => parseValue("123")).toThrow("Parsing error!");
+  expect(() => parseValue(123)).toThrow("Parsing error!");
+});
 
 ```
-### 106 Introducing the
+### 106 Introducing the Never Type in TypeScript
 ```ts
+// This function returns never, because it never returns!
+const getNever = () => {
+  throw new Error("This function never returns");
+};
+
+// ---------------------------------------------
+
+const fn = (input: never) => {};
+
+// Nothing is assignable to never!
+fn("hello");
+fn(42);
+fn(true);
+fn({});
+fn([]);
+fn(() => {});
+
+// Except for never itself!
+
+fn(getNever());
+
+// ---------------------------------------------
+
+// But we can assign never to anything!
+
+const str: string = getNever();
+const num: number = getNever();
+const bool: boolean = getNever();
+const arr: string[] = getNever();
 
 ```
+
+![alt text](image-6.png)
 ### 107 Solving the Never Type in TypeScript
 ```ts
+type ShoppingCart = {
+  items: string[];
+};
+
+const shoppingCart: ShoppingCart = {
+  items: [],
+};
+
+console.log(shoppingCart.items);
+
+shoppingCart.items.push("Apple");
+shoppingCart.items.push("Banana");
 
 ```
 ### 108 Empty Arrays and the Never Type in TypeScript
 ```ts
+const shoppingCart: {
+  items: string[];
+} = {
+  items: [],
+};
+
+console.log(shoppingCart.items);
+
+shoppingCart.items.push("Apple");
+shoppingCart.items.push("Banana");
 
 ```
 ### 109 Narrowing Return Types with TypeScript
 ```ts
+import { Equal, Expect } from "@total-typescript/helpers";
+
+const throwError = (message: string):undefined => {
+  throw new Error(message);
+};
+
+const handleSearchParams = (params: { id?: string }) => {
+  const id = params.id || throwError("No id provided");
+
+  type test = Expect<Equal<typeof id, string>>;
+
+  return id;
+};
 
 ```
 ### 110 Returning
 ```ts
+import { Equal, Expect } from "@total-typescript/helpers";
+
+const throwError = (message: string): never => {
+  throw new Error(message);
+};
+
+const handleSearchParams = (params: { id?: string }) => {
+  const id = params.id || throwError("No id provided");
+
+  type test = Expect<Equal<typeof id, string>>;
+
+  return id;
+};
 
 ```
 ### 111 Narrowing in Different Scopes
