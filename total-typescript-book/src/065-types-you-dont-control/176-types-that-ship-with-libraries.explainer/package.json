@@ -7,6 +7,6 @@
     "dev": "tsc --watch"
   },
   "dependencies": {
-    "zod": "^3.22.2"
+    "zod": "^3.22.3"
   }
 }
